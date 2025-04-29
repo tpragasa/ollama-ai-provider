@@ -224,6 +224,8 @@ export class OllamaChatLanguageModel implements LanguageModelV1 {
       usage: {
         completionTokens: response.eval_count || 0,
         promptTokens: response.prompt_eval_count || 0,
+        promptDuration: response.prompt_duration || 0,
+        evalDuration: response.eval_duration || 0,
       },
       warnings,
     }
@@ -307,9 +309,11 @@ export class OllamaChatLanguageModel implements LanguageModelV1 {
     })
 
     let finishReason: LanguageModelV1FinishReason = 'other'
-    let usage: { completionTokens: number; promptTokens: number } = {
+    let usage: { completionTokens: number; promptTokens: number; promptDuration?: number; evalDuration?: number } = {
       completionTokens: Number.NaN,
       promptTokens: Number.NaN,
+      promptDuration: Number.NaN,
+      evalDuration: Number.NaN,
     }
 
     const { experimentalStreamTools = true } = this.settings
@@ -343,6 +347,8 @@ export class OllamaChatLanguageModel implements LanguageModelV1 {
               usage = {
                 completionTokens: value.eval_count,
                 promptTokens: value.prompt_eval_count || 0,
+                promptDuration: value.prompt_duration || 0,
+                evalDuration: value.eval_duration || 0,
               }
 
               return
