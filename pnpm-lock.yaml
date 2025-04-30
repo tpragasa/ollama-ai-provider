@@ -59,6 +59,9 @@ importers:
       lint-staged:
         specifier: ^15.2.10
         version: 15.2.10
+      partial-json:
+        specifier: ^0.1.7
+        version: 0.1.7
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
